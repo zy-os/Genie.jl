@@ -293,10 +293,10 @@ function parse_seicolon_fields(dataString::String)
   dataStringLengthLoop::Int = dataStringLength + 1
 
   charIndex::Int = 1
-
+  Index::Int = 1   # real index for uft-8
   while charIndex < dataStringLengthLoop
-    character = dataString[charIndex]
-
+    # character = dataString[charIndex]
+    character = dataString[Index]   # use this Index instead of charIndex
     if ! inSingleQuotes && character == '"' && prevCharacter != '\\'
       inDoubleQuotes = ! inDoubleQuotes
       ignore = true
@@ -330,7 +330,7 @@ function parse_seicolon_fields(dataString::String)
     prevCharacter = character
 
     charIndex  = charIndex + 1
-
+    Index = nextind(dataString,Index)   # real index for uft-8
     ignore = false
   end
 
